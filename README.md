@@ -1,5 +1,6 @@
 # phantom
-community apps for Phantom security orchestration platform
+Community apps for Phantom security orchestration platform.
+Learn more about Phantom at [https://phantom.us](https://phantom.us).
 
 ## Usage
 You can download any of these apps and install to Phantom yourself.
