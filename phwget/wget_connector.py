@@ -1,5 +1,5 @@
 # -----------------------------------------
-# Phantom sample App Connector python file
+# wget - Phantom App
 # -----------------------------------------
 
 # Phantom App imports
