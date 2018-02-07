@@ -18,7 +18,7 @@ Upload the tgz package you wish to install.
 ## Apps
 
 ### wget
-![wget logo](../phwget/wget.png "wget logo")
+![wget logo](./phwget/wget.png "wget logo")
 - App: wget
 - Version: 0.1.0
 - Last update: Feb 7, 2018
