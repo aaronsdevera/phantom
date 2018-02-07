@@ -227,7 +227,7 @@ class WgetConnector(BaseConnector):
         Vault.add_attachment(vault_path, container_id, file_name=vault_filename, metadata=dict())
 
         # Use Vault API to see where the file was saved
-        vault_info = Vault.get_file_info(vault_id=None, filename=vault_filename, container_id=None)
+        vault_info = Vault.get_file_info(vault_id=None, file_name=vault_filename, container_id=None)
 
         # Get Vault ID of the saved file
         vault_id = vault_info[0]['vault_id']
