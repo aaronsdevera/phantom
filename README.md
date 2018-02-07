@@ -3,12 +3,17 @@ Community apps for Phantom security orchestration platform.
 Learn more about Phantom at [https://phantom.us](https://phantom.us).
 
 ## Usage
-You can download any of these apps and install to Phantom yourself.\
+You can download any of these apps and install to Phantom yourself.
 
 ### Building
 Navigate to the phantom/ folder and build using the following command:
-```tar -cvf <app>.tar app/```
-```i.e. tar -cvf phwget.tar phwget/```
+```bash
+tar -cvf <app>.tar app/
+```
+
+```bash
+i.e. tar -cvf phwget.tar phwget/
+```
 
 ### Installing
 Navigate to the **Apps** panel of your Phantom instance.
