@@ -6,6 +6,7 @@
 import phantom.app as phantom
 from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
+from phantom.vault import Vault
 
 # Usage of the consts file is recommended
 # from wget_consts import *
@@ -297,18 +298,18 @@ class WgetConnector(BaseConnector):
         # that needs to be accessed across actions
         self._state = self.load_state()
 
-        """
+        
         # get the asset config
         config = self.get_config()
 
         # Access values in asset config by the name
 
         # Required values can be accessed directly
-        required_config_name = config['required_config_name']
+        #required_config_name = config['required_config_name']
 
         # Optional values should use the .get() function
-        optional_config_name = config.get('optional_config_name')
-        """
+        optional_config_name = config.get('proxy domain')
+        
 
         return phantom.APP_SUCCESS
 
