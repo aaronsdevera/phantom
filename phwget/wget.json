@@ -1,0 +1,92 @@
+{
+    "appid": "2840cb52-15d2-4943-933b-0802b5e7c75b",
+    "name": "wget",
+    "description": "File acquisition app similar to wget functionality. Saves any file at a targets URL to a container vault for further action.",
+    "type": "information",
+    "product_vendor": "Generic",
+    "logo": "wget.png",
+    "product_name": "wget",
+    "product_version_regex": ".*",
+    "publisher": "Aaron S. DeVera",
+    "license": "Copyright Aaron S. DeVera 2018",
+    "app_version": "1.0.0",
+    "utctime_updated": "2018-02-07T16:08:53.156495Z",
+    "package_name": "phantom_wget",
+    "main_module": "wget_connector.py",
+    "min_phantom_version": "3.0.284",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "proxy domain": {
+            "description": "Option to route wget request via a proxy domain.",
+            "data_type": "string",
+            "required": false,
+            "value_list": [],
+            "default": "",
+            "order": 0
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get file",
+            "identifier": "get_file",
+            "description": "Acquires file at a target URL and saves to a container vault",
+            "verbose": "Acquires file at a target URL and saves to a container vault. Similar to wget functionality that allows for recursive downloads of web artifacts.",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "target url": {
+                    "description": "URL location of the targeted file you intended to download",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.target url",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "target url",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}
