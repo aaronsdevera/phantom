@@ -185,8 +185,16 @@ class WgetConnector(BaseConnector):
         # If proxy configuration exists, make with proxy
         config = self.get_config()
         if config.get('proxy domain'):
+            # get the config proxy domain
             PROXY_TARGET = config.get('proxy domain')
-            r = requests.get(TARGET_URL,proxy=PROXY_TARGET)
+            # create a dict for the requests module
+            PROXY_DICT = {
+                "http":PROXY_TARGET,
+                "https":PROXY_TARGET,
+                "ftp":PROXY_TARGET
+
+            }
+            r = requests.get(TARGET_URL,proxies=PROXY_DICT)
         else:
             r = requests.get(TARGET_URL)
 
