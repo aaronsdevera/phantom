@@ -9,7 +9,7 @@
     "product_version_regex": ".*",
     "publisher": "Aaron S. DeVera",
     "license": "Copyright Aaron S. DeVera 2018",
-    "app_version": "0.0.1",
+    "app_version": "0.0.2",
     "utctime_updated": "2018-02-07T16:08:53.156495Z",
     "package_name": "phantom_wget",
     "main_module": "wget_connector.py",
