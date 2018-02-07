@@ -9,7 +9,7 @@
     "product_version_regex": ".*",
     "publisher": "Aaron S. DeVera",
     "license": "Copyright Aaron S. DeVera 2018",
-    "app_version": "0.0.2",
+    "app_version": "0.1.0",
     "utctime_updated": "2018-02-07T16:08:53.156495Z",
     "package_name": "phantom_wget",
     "main_module": "wget_connector.py",
@@ -58,17 +58,24 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.data.*.vault_id",
+                    "data_type": "string",
+                    "contains": ["vault id"],
+                    "column_name": "vault id",
+                    "column_order": 0
+                },
+                {
                     "data_path": "action_result.parameter.target url",
                     "data_type": "string",
-                    "contains": [],
+                    "contains": ["url"],
                     "column_name": "target url",
-                    "column_order": 0
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "status",
-                    "column_order": 1
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.message",

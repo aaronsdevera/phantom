@@ -231,8 +231,7 @@ class WgetConnector(BaseConnector):
 
         # Get Vault ID of the saved file
         vault_id = vault_info[0]['vault_id']
-        vault_id_result = {"vault_id":vault_id}
-
+        
         # -------------------------------------
         # RESULTS AND REPORTING
         # -------------------------------------
@@ -243,16 +242,6 @@ class WgetConnector(BaseConnector):
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-
-        """
-        # Access action parameters passed in the 'param' dictionary
-
-        # Required values can be accessed directly
-        required_parameter = param['required_parameter']
-
-        # Optional values should use the .get() function
-        optional_parameter = param.get('optional_parameter', 'default_value')
-        """
 
         # Create a results dictionary object
         RESULT = {
