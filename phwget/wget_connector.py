@@ -11,6 +11,7 @@ from phantom.action_result import ActionResult
 # from wget_consts import *
 import requests
 import json
+import datetime
 from bs4 import BeautifulSoup
 
 
@@ -157,17 +158,82 @@ class WgetConnector(BaseConnector):
             # so just return from here
             self.save_progress("Test Connectivity Failed. Error: {0}".format(action_result.get_message()))
             return action_result.get_status()
-
-        # Return success
-        # self.save_progress("Test Connectivity Passed")
-        # return action_result.set_status(phantom.APP_SUCCESS)
         """
-
+        # Return success
+        self.save_progress("Test Connectivity Passed")
+        return action_result.set_status(phantom.APP_SUCCESS)
+        
+        """
         # For now return Error with a message, in case of success we don't set the message, but use the summary
         self.save_progress("Test Connectivity Failed, action not yet implemented")
         return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+        """
 
     def _handle_get_file(self, param):
+        
+        # -------------------------------------
+        # GETTING THE FILE VIA REQUESTS LIB
+        # -------------------------------------
+
+        # Iniatiate request variable
+        r = None
+
+        # Iniatite target URL variable
+        TARGET_URL = param['target url']
+
+        # If proxy configuration exists, make with proxy
+        if config.get('proxy domain'):
+            PROXY_TARGET = config.get('proxy domain')
+            r = requests.get(TARGET_URL,proxy=PROXY_TARGET)
+        else:
+            r = requests.get(TARGET_URL)
+
+        # -------------------------------------
+        # NAMING THE FILE, SAVING TO VAULT TMP
+        # -------------------------------------
+
+        # Filetype discovery
+        # use the file extension found at target URL
+        filetype = TARGET_URL.split('.')[-1]
+
+        # Filename discovery
+        # use string before the file extension found at target URL
+        filename = TARGET_URL.split('.')[-2].split('/')[-1]
+
+        # Timestamp init
+        timestamp = datetime.datetime.now().strftime('%m-%d-%Y_%H-%M-%S')
+
+        # Assemble vault filename
+        vault_filename = '%s_%s.%s' % (filename,timestamp,filetype)
+
+        # Vault path
+        vault_path = '/opt/phantom/vault/tmp/'+vault_filename
+
+        # Save requests content to vault path
+        with open(vault_path, 'wb') as f:
+            f.write(r.content)
+            f.close()
+
+        # -------------------------------------
+        # ADDING FILE TO A CONTAINER VAULT
+        # -------------------------------------
+
+        # Get the container id
+        container_id = self.get_container_id()
+
+        # Add Vault attachment
+        Vault.add_attachment(vault_path, container_id, file_name=vault_filename, metadata=dict())
+
+        # Use Vault API to see where the file was saved
+        vault_info = Vault.get_file_info(vault_id=None, filename=vault_filename, container_id=None)
+
+        # Get Vault ID of the saved file
+        vault_id = vault_info[0]['vault_id']
+        vault_id_result = {"vault_id":vault_id}
+
+        # -------------------------------------
+        # RESULTS AND REPORTING
+        # -------------------------------------
 
         # Implement the handler here
         # use self.save_progress(...) to send progress messages back to the platform
@@ -186,33 +252,26 @@ class WgetConnector(BaseConnector):
         optional_parameter = param.get('optional_parameter', 'default_value')
         """
 
-        """
-        # make rest call
-        ret_val, response = self._make_rest_call('/endpoint', action_result, params=None, headers=None)
+        # Create a results dictionary object
+        RESULT = {
+            "file_name":vault_filename,
+            "vault_id":vault_id,
+            "vault_path":vault_path
+        }
 
-        if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
-            return action_result.get_status()
-
-        # Now post process the data,  uncomment code as you deem fit
-
-        # Add the response into the data section
-        # action_result.add_data(response)
-        """
-
-        action_result.add_data({})
+        # Post results to action_result
+        action_result.add_data(RESULT)
 
         # Add a dictionary that is made up of the most important values from data into the summary
         summary = action_result.update_summary({})
-        summary['important_data'] = "value"
+        summary['vault_id'] = vault_id
 
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary dictionary
-        # return action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS)
 
         # For now return Error with a message, in case of success we don't set the message, but use the summary
-        return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+        #return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def handle_action(self, param):
 
