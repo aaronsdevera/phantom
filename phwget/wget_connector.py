@@ -182,6 +182,7 @@ class WgetConnector(BaseConnector):
         TARGET_URL = param['target url']
 
         # If proxy configuration exists, make with proxy
+        config = self.get_config()
         if config.get('proxy domain'):
             PROXY_TARGET = config.get('proxy domain')
             r = requests.get(TARGET_URL,proxy=PROXY_TARGET)
